@@ -1,7 +1,16 @@
+
+export UV_CACHE_DIR=/goinfre/otahiri-/uv-cache
+export UV_PROJECT_ENVIRONMENT=/goinfre/otahiri-/llm_test_env
+
 all: run
+
 
 run:
 	uv run python3 main.py
+
+debug:
+
+	uv run python3 -m pdb main.py
 
 intall:
 	uv sync
