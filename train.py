@@ -48,7 +48,7 @@ class Head(nn.Module):
         self.key = nn.Linear(n_embd, head_size, bias=False)
         self.query = nn.Linear(n_embd, head_size, bias=False)
         self.value = nn.Linear(n_embd, head_size, bias=False)
-        self.dropout = nn.Dropout(dropout)
+        self.dropout = dropout
 
     def forward(self, x):
         B, T, C = x.shape
@@ -173,7 +173,7 @@ def estimate_loss():
 
 def main():
     optimizer = torch.optim.AdamW(m.parameters(), lr=learning_rate)
-    scaler = torch.amp.GradeScaler(device)
+    scaler = torch.amp.GradScaler(device)
     for steps in range(max_iters):
         if steps % eval_interval == 0:
             losses = estimate_loss()

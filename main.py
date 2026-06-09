@@ -1,8 +1,8 @@
-import train
+import neural_network
 
 
 def main():
-    train.main()
+    neural_network.main()
 
 
 if __name__ == "__main__":
