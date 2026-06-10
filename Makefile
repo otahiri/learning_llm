@@ -1,6 +1,6 @@
 
-export UV_CACHE_DIR=/goinfre/otahiri-/uv-cache
-export UV_PROJECT_ENVIRONMENT=/goinfre/otahiri-/llm_test_env
+# export UV_CACHE_DIR=/goinfre/otahiri-/uv-cache
+# export UV_PROJECT_ENVIRONMENT=/goinfre/otahiri-/llm_test_env
 
 all: run
 

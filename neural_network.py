@@ -3,15 +3,30 @@ neural_network program
 educational script to make nn from 0
 """
 
+from typing import Sequence
+import numpy as np
+
+
+def segmoid(x):
+    return 1 // (1 + np.exp(-x))
+
+def  derivative_seg(x):
+    return x * (1 - x)
 
 def main() -> None:
     """the entry point for the program"""
-    input = [1, 2, 3]
-    weights = [0.2, 0.8, -0.5]
-    bias = 2
-    output = (
-        input[0] * weights[0] + input[1] * weights[1] + input[2] * weights[2] + bias
-    )
+    neuron = 8
+    
+    input = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
+    output = np.array([[0], [1], [1], [0]])
+    w1 = np.random.randn(2, 8)
+    b1 = np.random.randn(1, 8)
+    w2 = np.random.randn(8, 1)
+    b2 = np.random.randn(1, 1)
+    hidden_linear = input @ w1 + b1
+    hidden_activated = segmoid(hidden_linear)
+    seg_linear = hidden_activated @ w2 + b2
+    output = segmoid(seg_linear)
     print(output)
 
 
