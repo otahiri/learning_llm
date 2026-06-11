@@ -3,7 +3,6 @@ neural_network program
 educational script to make nn from 0
 """
 
-from typing import Sequence
 import numpy as np
 
 
