@@ -1,8 +1,8 @@
-import neural_network
+import tokenizer
 
 
 def main():
-    neural_network.main()
+    tokenizer.main()
 
 
 if __name__ == "__main__":
