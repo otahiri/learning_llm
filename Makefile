@@ -6,7 +6,7 @@ all: run
 
 
 run:
-	uv run python3 main.py
+	uv run python3 -m nn_zero_to_hero
 
 debug:
 
