@@ -1,15 +1,15 @@
-from nn_zero_to_hero import Value, Neuron
+from nn_zero_to_hero import Tensor, Neuron
 import numpy as np
 
 
 def main():
-    target = Value(382)
-    xs = [Value(x) for x in np.random.rand(100)]
+    target = Tensor(3.2)
+    xs = [Tensor(x) for x in np.random.rand(100)]
     lr = 5e-4
     neuron = Neuron(lr)
-    neuron.initiate_params(xs)
+    neuron.initiate_params(len(xs))
 
-    for step in range(401):
+    for step in range(400):
         o = neuron.feed_forward(xs)
         neuron.back_propogation(target, o)
         if step % 10 == 0:

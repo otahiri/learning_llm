@@ -1,33 +1,38 @@
-class Value:
+import numpy as np
+
+
+class Tensor:
     def __init__(self, data, _children=(), _op="", label="") -> None:
-        self.data = data
-        self.grad = 0.0
-        self._prev = _children
+        self.data = np.array(data, dtype=np.float64)
+        self.grad = np.zeros_like(self.data, dtype=np.float64)
+        self._prev = tuple(_children)
         self._op = _op
-        self.label = label
 
     def __repr__(self) -> str:
         return f"Value(data={self.data})"
 
     def __add__(self, other):
-        return Value(self.data + other.data, (self, other), "+")
+        other = other if isinstance(other, Tensor) else Tensor(other)
+        return Tensor(self.data + other.data, (self, other), "+")
 
     def __mul__(self, other):
-        return Value(self.data * other.data, (self, other), "*")
+        other = other if isinstance(other, Tensor) else Tensor(other)
+        return Tensor(self.data * other.data, (self, other), "*")
 
     def __sub__(self, other):
-        other = other if isinstance(other, Value) else Value(other)
-        return self + (other * Value(-1.0))
+        other = other if isinstance(other, Tensor) else Tensor(other)
+        return self + (other * Tensor(-1.0))
 
     def ReLu(self):
-        out = Value(max(0.001 * self.data, self.data), (self,), "ReLu")
+        out = Tensor(np.maximum(0.001 * self.data, self.data), (self,), "ReLu")
         return out
 
-    def __pow__(self, pow):
-        return Value(self.data ** pow, (self,), "pow")
-
     def backwards(self):
-        self.grad = 1.0
+        """
+        build topoligical sort for the graph and calculate
+        the gradiant for every node in the graph
+        """
+        self.grad = np.array(1.0)
         visited = set()
         topo = []
 

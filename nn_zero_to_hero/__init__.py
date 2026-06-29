@@ -1,4 +1,4 @@
-from .value import Value
+from .value import Tensor
 from .neural_network import Neuron
 
-__all__ = ["Value", "Neuron"]
+__all__ = ["Tensor", "Neuron"]
