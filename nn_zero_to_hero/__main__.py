@@ -1,19 +1,22 @@
-from nn_zero_to_hero import Tensor, Neuron
+from nn_zero_to_hero import Tensor, Neuron, NeuralNetwork
 import numpy as np
 
 
 def main():
-    target = Tensor(3.2)
+    target = Tensor(99982189)
     xs = [Tensor(x) for x in np.random.rand(100)]
-    lr = 5e-4
-    neuron = Neuron(lr)
-    neuron.initiate_params(len(xs))
+    lr = 1e-11
 
-    for step in range(400):
-        o = neuron.feed_forward(xs)
-        neuron.back_propogation(target, o)
-        if step % 10 == 0:
-            print(o)
+    print("hello")
+    nn = NeuralNetwork(2, 10, lr, len(xs))
+    print("hello")
+
+    for _ in range(10000):
+        out = nn.feed_forward(xs)
+        diff = out - target
+        loss = diff * diff
+        nn.train_network(loss)
+        print(out)
 
 
 if __name__ == "__main__":
