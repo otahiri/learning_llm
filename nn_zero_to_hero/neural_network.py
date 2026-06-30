@@ -26,7 +26,7 @@ class Neuron:
 
 
 class NeuralNetwork:
-    def __init__(self, hidden_layers, neurons, lr, nin: int) -> None:
+    def __init__(self, hidden_layers, neurons, lr, nin: int, nout: int) -> None:
         self.neurons = neurons
         self.lr = lr
         self.layers: list[list[Neuron]] = []
@@ -37,21 +37,23 @@ class NeuralNetwork:
                 n.initiate_params(current_nin)
             current_nin = neurons
             self.layers.append(layer)
-        self.output = Neuron(lr)
-        self.output.initiate_params(current_nin)
+        self.output = [Neuron(lr) for _ in range(nout)]
+        for n in self.output:
+            n.initiate_params(current_nin)
 
     def feed_forward(self, inputs: list):
         out = inputs
         for layer in self.layers:
             out = [n.feed_forward(out, True) for n in layer]
-        return self.output.feed_forward(out, False)
+        return [n.feed_forward(out, False) for n in self.output]
 
     def parameters(self) -> list[Tensor]:
         params = []
         for layer in self.layers:
             for n in layer:
                 params.extend(n.parameters())
-        params.extend(self.output.parameters())
+        for n in self.output:
+            params.extend(n.parameters())
         return params
 
     def train_network(self, loss: Tensor):
