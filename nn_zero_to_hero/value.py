@@ -7,6 +7,10 @@ class Tensor:
         self.grad = np.zeros_like(self.data, dtype=np.float64)
         self._prev = tuple(_children)
         self._op = _op
+        self.step = 0
+        self.prev_momentum = np.zeros_like(self.data, dtype=np.float64)
+        self.prev_vel = np.zeros_like(self.data, dtype=np.float64)
+
 
     def __repr__(self) -> str:
         return f"Value(data={self.data})"
